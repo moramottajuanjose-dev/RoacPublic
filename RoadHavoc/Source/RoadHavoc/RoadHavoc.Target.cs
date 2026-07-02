@@ -1,1 +1,0 @@
-using UnrealBuildTool; public class RoadHavocTarget:TargetRules{public RoadHavocTarget(TargetInfo Target):base(Target){Type=TargetType.Game;DefaultBuildSettings=BuildSettingsVersion.V5;ExtraModuleNames.Add("RoadHavoc");}}
