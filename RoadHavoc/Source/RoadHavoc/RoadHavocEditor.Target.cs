@@ -1,0 +1,1 @@
+using UnrealBuildTool; public class RoadHavocEditorTarget:TargetRules{public RoadHavocEditorTarget(TargetInfo Target):base(Target){Type=TargetType.Editor;DefaultBuildSettings=BuildSettingsVersion.V5;ExtraModuleNames.Add("RoadHavoc");}}
