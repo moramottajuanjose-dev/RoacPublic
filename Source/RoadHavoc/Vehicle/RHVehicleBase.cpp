@@ -3,6 +3,7 @@
 #include "Vehicle/RHNitroComponent.h"
 #include "Vehicle/RHCameraComponent.h"
 #include "Vehicle/RHWeaponMountComponent.h"
+#include "Weapons/RHMachineGun.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -35,11 +36,21 @@ ARHVehicleBase::ARHVehicleBase()
 	NitroComponent = CreateDefaultSubobject<URHNitroComponent>(TEXT("NitroComponent"));
 	CameraLogicComponent = CreateDefaultSubobject<URHCameraComponent>(TEXT("CameraLogicComponent"));
 
+	// Weapon mounts are USceneComponents so they have a real world transform to
+	// spawn projectiles from. Attach them to the root at approximate bumper
+	// positions; adjust per-vehicle in each Blueprint subclass to match its mesh.
 	FrontWeaponMount = CreateDefaultSubobject<URHWeaponMountComponent>(TEXT("FrontWeaponMount"));
+	FrontWeaponMount->SetupAttachment(RootComponent);
+	FrontWeaponMount->SetRelativeLocation(FVector(250.f, 0.f, 40.f));
 	FrontWeaponMount->Slot = ERHWeaponSlot::Front;
+	FrontWeaponMount->ProjectileClass = ARHMachineGun::StaticClass();
 
 	RearWeaponMount = CreateDefaultSubobject<URHWeaponMountComponent>(TEXT("RearWeaponMount"));
+	RearWeaponMount->SetupAttachment(RootComponent);
+	RearWeaponMount->SetRelativeLocation(FVector(-250.f, 0.f, 40.f));
+	RearWeaponMount->SetRelativeRotation(FRotator(0.f, 180.f, 0.f));
 	RearWeaponMount->Slot = ERHWeaponSlot::Rear;
+	RearWeaponMount->ProjectileClass = ARHMachineGun::StaticClass();
 }
 
 void ARHVehicleBase::BeginPlay()
